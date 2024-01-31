@@ -1,0 +1,245 @@
+replicaCount: 1
+strategyType: RollingUpdate
+maxSurge: 1
+maxUnavailable: 1
+
+image:
+  repository: "pihole/pihole"
+  tag: ""
+  pullPolicy: IfNotPresent
+
+dualStack:
+  enabled: false
+
+dnsHostPort:
+  enabled: false
+  port: 53
+
+serviceDns:
+  mixedService: false
+  type: NodePort
+  port: 53
+  nodePort: ""
+  externalTrafficPolicy: Local
+  loadBalancerIP: ""
+  loadBalancerIPv6: ""
+  annotations:
+    {}
+
+serviceDhcp:
+  enabled: true
+
+  type: NodePort
+
+  port: 67
+
+  nodePort: ""
+
+  externalTrafficPolicy: Local
+
+  loadBalancerIP: ""
+  loadBalancerIPv6: ""
+
+  annotations:
+    {}
+
+serviceWeb:
+  http:
+    enabled: true
+
+    port: 80
+
+    nodePort: ""
+
+  https:
+    enabled: true
+
+    port: 443
+
+    nodePort: ""
+
+  type: ClusterIP
+
+  externalTrafficPolicy: Local
+
+  loadBalancerIP: ""
+  loadBalancerIPv6: ""
+
+  annotations:
+    {}
+
+virtualHost: pi.hole
+
+ingress:
+  enabled: false
+
+
+  annotations:
+    {}
+  path: /
+  hosts:
+    - chart-example.local
+  tls: []
+
+probes:
+  liveness:
+    type: httpGet
+    enabled: true
+    initialDelaySeconds: 60
+    failureThreshold: 10
+    timeoutSeconds: 5
+    port: http
+    scheme: HTTP
+  readiness:
+    enabled: true
+    initialDelaySeconds: 60
+    failureThreshold: 3
+    timeoutSeconds: 5
+    port: http
+    scheme: HTTP
+
+resources:
+  {}
+persistentVolumeClaim:
+  enabled: false
+  annotations: {}
+  accessModes:
+    - ReadWriteOnce
+  size: "500Mi"
+nodeSelector: {}
+tolerations: []
+topologySpreadConstraints: []
+affinity: {}
+adminPassword: "admin"
+admin:
+  enabled: true
+  existingSecret: ""
+  passwordKey: "password"
+
+extraEnvVars:
+  {}
+
+extraEnvVarsSecret:
+  {}
+
+DNS1: "8.8.8.8"
+DNS2: "8.8.4.4"
+
+antiaff:
+  enabled: false
+  avoidRelease: pihole1
+  strict: true
+  namespaces: []
+
+doh:
+  enabled: false
+  name: "cloudflared"
+  repository: "crazymax/cloudflared"
+  tag: latest
+  pullPolicy: IfNotPresent
+  envVars:
+    {}
+
+  probes:
+    liveness:
+      enabled: true
+      probe:
+        exec:
+          command:
+            - nslookup
+            - -po=5053
+            - cloudflare.com
+            - "127.0.0.1"
+      initialDelaySeconds: 60
+      failureThreshold: 10
+      timeoutSeconds: 5
+
+dnsmasq:
+  upstreamServers: []
+
+  customDnsEntries: []
+
+  additionalHostsEntries: []
+
+  staticDhcpEntries: []
+
+  customSettings:
+
+  customCnameEntries: []
+
+adlists:
+  {}
+
+whitelist:
+  {}
+
+blacklist:
+  {}
+
+regex:
+  {}
+
+ftl:
+  {}
+
+webHttp: "80"
+
+webHttps: "443"
+
+hostname: ""
+
+hostNetwork: "false"
+
+privileged: "false"
+
+capabilities:
+  {}
+
+customVolumes:
+  enabled: false
+  config:
+    {}
+
+extraVolumes:
+  {}
+
+extraVolumeMounts:
+  {}
+
+extraContainers:
+  []
+
+extraObjects:
+  []
+
+podAnnotations:
+  {}
+
+extraInitContainers:
+  []
+
+monitoring:
+  podMonitor:
+    enabled: false
+  sidecar:
+    enabled: false
+    port: 9617
+    image:
+      repository: ekofr/pihole-exporter
+      tag: v0.3.0
+      pullPolicy: IfNotPresent
+    resources:
+      limits:
+        memory: 128Mi
+
+podDnsConfig:
+  enabled: true
+  policy: "None"
+  nameservers:
+    - 127.0.0.1
+    - 8.8.8.8
+    - 1.1.1.1
+
+podDisruptionBudget:
+  enabled: false
+  minAvailable: 1
