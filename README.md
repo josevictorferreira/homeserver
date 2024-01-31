@@ -13,7 +13,7 @@ This is my kubernetes home server ops files, feel free to copy and use it.
 
 ### Setup
 
-Pihole:
+#### Pihole
 ```bash
 helm upgrade --install pihole -n production --values pihole/production.yaml pihole
 ```
