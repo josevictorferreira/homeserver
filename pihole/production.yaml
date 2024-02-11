@@ -2,30 +2,13 @@ persistentVolumeClaim:
   enabled: true
 
 serviceWeb:
-  loadBalancerIP: 10.10.10.45
+  loadBalancerIP: 10.10.10.210
+  annotations:
+    metallb.universe.tf/allow-shared-ip: pihole-svc
   type: LoadBalancer
-  http:
-    port: 8080
-  https:
-    port: 4443
-
-probes:
-  liveness:
-    type: httpGet
-    enabled: true
-    initialDelaySeconds: 60
-    failureThreshold: 10
-    timeoutSeconds: 5
-    port: 8080
-    scheme: HTTP
-  readiness:
-    enabled: true
-    initialDelaySeconds: 60
-    failureThreshold: 3
-    timeoutSeconds: 5
-    port: 8080
-    scheme: HTTP
 
 serviceDns:
-  loadBalancerIP: 10.10.10.45
+  loadBalancerIP: 10.10.10.210
+  annotations:
+    metallb.universe.tf/allow-shared-ip: pihole-svc
   type: LoadBalancer

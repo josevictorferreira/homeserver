@@ -3,7 +3,7 @@ setup: ## Setup the services, expects service=service_name
 ifeq ($(service),metallb)
 	helm upgrade --install metallb-system --kube-context homeserver --create-namespace --namespace metallb-system --values metallb/values.yaml metallb
 else ifeq ($(service),pihole)
-	helm upgrade --install pihole --kube-context homeserver -n production --values pihole/production.yaml pihole
+	helm upgrade --install pihole --kube-context homeserver --create-namespace -n production --values pihole/production.yaml pihole
 else
 	@echo "Service not found."
 endif
