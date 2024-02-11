@@ -16,15 +16,15 @@ This is my kubernetes home server ops files, feel free to copy and use it.
 
 ### K3s Cluster
 
-- Edit `/etc/systemd/system/k3s.service` and add `--disable traefik` and `disable servicelb` to the `ExecStart` line.
+Edit `/etc/systemd/system/k3s.service` and add `--disable traefik` and `disable servicelb` to the `ExecStart` line.
 
-- To remove all existing and klipper resources:
+To remove all existing and klipper resources:
 ```bash
 kubectl delete all -n kube-system --selector 'app=traefik'
 kubectl delete all -n kube-system --selector 'app=klipper-lb'
 ```
 
-- Installing metallb, run the command `make setup service=metallb` then after run this to add the range of external IPs:
+Installing metallb, run the command `make setup service=metallb` then after run this to add the range of external IPs:
 ```bash
 cat << 'EOF' | kubectl apply -f -
 apiVersion: metallb.io/v1beta1
@@ -47,7 +47,7 @@ spec:
 EOF
 ```
 
-- Install ingress-nginx:
+Install ingress-nginx:
 ```bash
 kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main/deploy/static/provider/cloud/deploy.yaml
 ```
