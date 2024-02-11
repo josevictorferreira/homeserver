@@ -1,4 +1,4 @@
-setup: ## Setup the services, expects service=service_name
+setup: ## Setup the services, expects parameter service=service_name
 	@echo "Setting up $(service)"
 ifeq ($(service),metallb)
 	helm upgrade --install metallb-system --kube-context homeserver --create-namespace --namespace metallb-system --values metallb/values.yaml metallb
