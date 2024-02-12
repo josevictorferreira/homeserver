@@ -14,7 +14,7 @@ This is my kubernetes home server ops files, feel free to copy and use it.
 
 - Remember to disable enterprise repository on pve -> Updates -> Repositories.
 
-### K3s Cluster
+### K3s Cluster Installation Steps
 
 Edit `/etc/systemd/system/k3s.service` and add `--disable traefik` and `disable servicelb` to the `ExecStart` line.
 
@@ -54,5 +54,5 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main
 
 #### Pihole
 ```bash
-helm upgrade --install pihole -n production --values pihole/production.yaml pihole
+make setup service=pihole
 ```
