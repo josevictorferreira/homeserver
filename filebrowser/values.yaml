@@ -51,6 +51,9 @@ service:
   type: ClusterIP
   # -- Kubernetes Service port
   port: 80
+  loadBalancerIP: 10.10.10.215
+  annotations:
+    metallb.universe.tf/allow-shared-ip: filebrowser
 
 ingress:
   # -- Enable the use of the ingress controller to access the web UI
