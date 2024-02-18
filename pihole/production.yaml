@@ -8,14 +8,17 @@ podDnsConfig:
 
 dnsmasq:
   upstreamServers:
+    - server=/proxmox.hs/10.10.10.200
     - server=/pihole.hs/10.10.10.210
     - server=/storage.hs/10.10.10.215
   customDnsEntries:
+    - address=/proxmox.hs/10.10.10.200
     - address=/pihole.hs/10.10.10.210
     - address=/storage.hs/10.10.10.215
   customCnameEntries:
     - cname=pihole,pihole.hs
     - cname=storage,storage.hs
+    - cname=proxmox,proxmox.hs
 
 persistentVolumeClaim:
   enabled: true
@@ -31,3 +34,6 @@ serviceDns:
   annotations:
     metallb.universe.tf/allow-shared-ip: pihole-svc
   type: LoadBalancer
+
+admin:
+  existingSecret: "pihole-password"
