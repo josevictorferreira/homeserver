@@ -4,6 +4,8 @@ ifeq ($(service),metallb)
 	helm upgrade --install metallb-system --kube-context homeserver --create-namespace --namespace metallb-system --values metallb/values.yaml metallb
 else ifeq ($(service),pihole)
 	helm upgrade --install pihole --kube-context homeserver --create-namespace -n production --values pihole/production.yaml pihole
+else ifeq ($(service),filebrowser)
+	helm upgrade --install filebrowser --kube-context homeserver --create-namespace -n production --values filebrowser/production.yaml filebrowser
 else
 	@echo "Service not found."
 endif
