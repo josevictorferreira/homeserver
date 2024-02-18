@@ -36,4 +36,7 @@ serviceDns:
   type: LoadBalancer
 
 admin:
-  existingSecret: "pihole-password"
+  enabled: true
+  existingSecret: "pihole-secrets"
+  passwordKey: "ADMIN_PASSWORD"
+
