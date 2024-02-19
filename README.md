@@ -16,7 +16,9 @@ This is my kubernetes home server ops files, feel free to copy and use it.
 
 ### K3s Cluster Installation Steps
 
-Edit `/etc/systemd/system/k3s.service` and add `--disable traefik` and `disable servicelb` to the `ExecStart` line.
+Edit `/etc/systemd/system/k3s.service` and add `--no-deploy=traefik` and `--disable=servicelb` to the `ExecStart` line.
+
+Also remove the file `sudo rm /var/lib/rancher/k3s/server/manifests/traefik.yaml`
 
 To remove all existing and klipper resources:
 ```bash
