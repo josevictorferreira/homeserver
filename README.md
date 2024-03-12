@@ -58,3 +58,14 @@ kubectl apply -f https://raw.githubusercontent.com/kubernetes/ingress-nginx/main
 ```bash
 make setup service=pihole
 ```
+
+### QBittorrent
+
+Get nordvpn private key and edit the values file (must install wireguard-tools before):
+
+```bash
+nordvpn login --legacy
+sudo wg show nordlynx private-key
+```
+
+Then paste the private key to the values env wireguard variable.

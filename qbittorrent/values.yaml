@@ -9,7 +9,7 @@ qbitportforwardImage:
 qbitportforward:
   enabled: false
   QBT_USERNAME: "admin"
-  QBT_PASSWORD: "adminadmin"
+  QBT_PASSWORD: "teste123"
 service:
   main:
     type: LoadBalancer
@@ -67,7 +67,17 @@ workload:
 persistence:
   config:
     enabled: true
+    type: hostPath
+    hostPath: "/mnt/external_storage_1/downloads"
     mountPath: "/config"
+    hostPathType: DirectoryOrCreate
+  shared:
+    enabled: true
+    type: hostPath
+    hostPath: "/mnt/external_storage_1/downloads"
+    mountPath: "/shared"
+    hostPathType: DirectoryOrCreate
+
 portal:
   open:
     enabled: true
@@ -77,4 +87,11 @@ securityContext:
 
 addons:
   vpn:
-    type: openvpn
+    type: gluetun
+    env: 
+      QBT_PASSWORD:
+      QBT_USERNAME:
+      SERVER_COUNTRIES:
+      VPN_SERVICE_PROVIDER:
+      VPN_TYPE:
+      WIREGUARD_PRIVATE_KEY:
