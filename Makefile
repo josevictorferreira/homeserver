@@ -6,9 +6,18 @@ else ifeq ($(service),pihole)
 	helm upgrade --install pihole --kube-context homeserver --create-namespace -n production --values pihole/production.yaml pihole
 else ifeq ($(service),filebrowser)
 	helm upgrade --install filebrowser --kube-context homeserver --create-namespace -n production --values filebrowser/production.yaml filebrowser
+else ifeq ($(service),qbittorrent)
+	helm upgrade --install qbittorrent --kube-context homeserver --create-namespace -n production --values qbittorrent/production.yaml qbittorrent
 else
 	@echo "Service not found."
 endif
+
+services: ## List available services to setup
+	@echo "Services Available:"
+	@echo "  - metallb"
+	@echo "  - pihole"
+	@echo "  - filebrowser"
+	@echo "  - qbittorrent"
 
 help: ## Show this help
 	@echo "Usage: make [target]"
