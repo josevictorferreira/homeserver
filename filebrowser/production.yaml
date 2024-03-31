@@ -2,7 +2,7 @@ rootDir:
   type: hostPath
   readOnly: false
   hostPath:
-    path: /mnt/external_storage_1
+    path: /mnt/shared_storage_1
 
 service:
   type: LoadBalancer
