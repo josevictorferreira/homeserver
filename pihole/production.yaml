@@ -37,6 +37,6 @@ serviceDns:
 
 admin:
   enabled: true
-  existingSecret: "pihole-secrets"
+  existingSecret: "pihole-secret"
   passwordKey: "ADMIN_PASSWORD"
 

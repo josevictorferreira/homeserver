@@ -7,7 +7,7 @@ else ifeq ($(service),pihole)
 else ifeq ($(service),filebrowser)
 	helm upgrade --install filebrowser --kube-context homeserver --create-namespace -n production --values filebrowser/production.yaml filebrowser
 else ifeq ($(service),qbittorrent)
-	helm upgrade --install qbittorrent --kube-context homeserver --create-namespace -n production --values qbittorrent/production.yaml qbittorrent
+	helm upgrade --install qbittorrent --kube-context homeserver --create-namespace -n production --values qbittorrent/values.yaml qbittorrent
 else
 	@echo "Service not found."
 endif
