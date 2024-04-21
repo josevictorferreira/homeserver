@@ -68,13 +68,13 @@ persistence:
   config:
     enabled: true
     type: hostPath
-    hostPath: "/mnt/external_storage_1/downloads"
+    hostPath: "/mnt/shared_storage_1/downloads"
     mountPath: "/config"
     hostPathType: DirectoryOrCreate
   shared:
     enabled: true
     type: hostPath
-    hostPath: "/mnt/external_storage_1/downloads"
+    hostPath: "/mnt/shared_storage_1/downloads"
     mountPath: "/shared"
     hostPathType: DirectoryOrCreate
 
@@ -88,10 +88,4 @@ securityContext:
 addons:
   vpn:
     type: gluetun
-    env: 
-      QBT_PASSWORD:
-      QBT_USERNAME:
-      SERVER_COUNTRIES:
-      VPN_SERVICE_PROVIDER:
-      VPN_TYPE:
-      WIREGUARD_PRIVATE_KEY:
+    existingSecret: qbittorrent-secret
