@@ -9,7 +9,9 @@ else ifeq ($(service),filebrowser)
 else ifeq ($(service),qbittorrent)
 	helm upgrade --install qbittorrent --kube-context homeserver --create-namespace -n production --values qbittorrent/values.yaml qbittorrent
 else ifeq ($(service),prometheus)
-	helm upgrade --isntall prometheus --kube-context homeserver --create-namespace -n monitoring --values k8s/monitoring/kube-prometheus-stack/production.yaml k8s/monitoring/kube-prometheus-stack/
+	helm upgrade --install prometheus --kube-context homeserver --create-namespace -n monitoring --values k8s/monitoring/kube-prometheus-stack/production.yaml k8s/monitoring/kube-prometheus-stack/
+else ifeq ($(service),readarr)
+	helm upgrade --install readarr --kube-context homeserver --create-namespace -n production --values readarr/production.yaml readarr
 else
 	@echo "Service not found."
 endif
@@ -21,6 +23,7 @@ services: ## List available services to setup
 	@echo "  - filebrowser"
 	@echo "  - qbittorrent"
 	@echo "  - prometheus"
+	@echo "  - readarr"
 
 help: ## Show this help
 	@echo "Usage: make [target]"
