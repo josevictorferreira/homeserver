@@ -1,3 +1,5 @@
+.DEFAULT_GOAL := help
+
 setup: ## Setup the services, expects parameter service=service_name
 	@echo "Setting up $(service)"
 ifeq ($(service),metallb)
@@ -16,7 +18,25 @@ else
 	@echo "Service not found."
 endif
 
-services: ## List available services to setup
+delete: ## Delete the services, expects parameter service=service_name
+	@echo "Deleting $(service)"
+ifeq ($(service),metallb)
+	helm delete metallb-system --kube-context homeserver -n metallb-system
+else ifeq ($(service),pihole)
+	helm delete pihole --kube-context homeserver -n production
+else ifeq ($(service),filebrowser)
+	helm delete filebrowser --kube-context homeserver -n production
+else ifeq ($(service),qbittorrent)
+	helm delete qbittorrent --kube-context homeserver -n production
+else ifeq ($(service),prometheus)
+	helm delete prometheus --kube-context homeserver -n monitoring
+else ifeq ($(service),readarr)
+	helm delete readarr --kube-context homeserver -n production
+else
+	@echo "Service not found."
+endif
+
+services: ## List services available to setup
 	@echo "Services Available:"
 	@echo "  - metallb"
 	@echo "  - pihole"
@@ -25,7 +45,5 @@ services: ## List available services to setup
 	@echo "  - prometheus"
 	@echo "  - readarr"
 
-help: ## Show this help
-	@echo "Usage: make [target]"
-	@echo "Targets:"
-	@awk -F ':.*?## ' '/:.*?## / {printf "  %-20s %s\n", $$1, $$2}' $(MAKEFILE_LIST)
+help: ## Show this help.
+	@printf "Usage: make [target]\n\nTARGETS:\n"; grep -F "##" $(MAKEFILE_LIST) | grep -Fv "grep -F" | grep -Fv "printf " | sed -e 's/\\$$//' | sed -e 's/##//' | column -t -s ":" | sed -e 's/^/    /'; printf "\n"
